@@ -35,6 +35,13 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/users/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = { _id : new ObjectId(id)}
+      const result = await usersCollection.findOne(query);
+      res.send(result);
+    })
+    
     app.post('/users', async (req, res)=>{
       console.log("data in the server", req.body);
       const result = await usersCollection.insertOne(req.body);
@@ -49,7 +56,6 @@ async function run() {
       const query = { _id: new ObjectId(id)}
       const result = await usersCollection.deleteOne(query);
       res.send(result);
-
     })
 
     await client.db("admin").command({ ping: 1 });
